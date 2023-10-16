@@ -27,10 +27,12 @@ public class MonteCarlo{
                 }
                 num++;
             }
-            var timeToSwitchBoard = timeToGetToSwitchBoard(val);
-            totalTime += timeToSwitchBoard;
-            int representativeTime = assignRepresentativeTotalTime();
-            totalTime += representativeTime;
+            if(num != 3) {
+                var timeToSwitchBoard = timeToGetToSwitchBoard(val);
+                totalTime += timeToSwitchBoard;
+                int representativeTime = assignRepresentativeTotalTime();
+                totalTime += representativeTime;
+            }
 
 
             DecimalFormat df = new DecimalFormat("#.###");
