@@ -20,7 +20,8 @@ public class MonteCarlo{
             while (numCalls < 3) {
                 xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
                 uValue = (double) xValue / MODULUS;
-                totalTime += xValue;
+                var timeToSwitchBoard = timeToGetToSwitchBoard(uValue);
+                totalTime += timeToSwitchBoard;
 
                 if(isSuccessful()){
                     break;
@@ -28,18 +29,19 @@ public class MonteCarlo{
                 numCalls++;
             }
             if(numCalls != 3) {
-                var timeToSwitchBoard = timeToGetToSwitchBoard(uValue);
-                totalTime += timeToSwitchBoard + numCalls * 3; //num * 3 is the time of first call given number of times through switchboard
+                totalTime += numCalls * 3; //num * 3 is the time of first call given number of times through switchboard
                 totalTime += 2 * (numCalls - 1); //hangup time for failed calls
                 totalTime += 5; //+5 is for time after success to get into contact with representative
                 int representativeTime = assignRepresentativeTotalTime();
                 totalTime += representativeTime; //total time on phone with representative
+                DecimalFormat df = new DecimalFormat("#.###");
+                System.out.println("Total Time: " + df.format(totalTime));
+                System.out.println("Representative Time" + representativeTime);
             }
 
 
             DecimalFormat df = new DecimalFormat("#.###");
 //          System.out.println(df.format(uValue));
-            System.out.println(totalTime);
             return randomNumberGenerator(xValue, trials - 1);
         }
     }
@@ -51,7 +53,6 @@ public class MonteCarlo{
     public int assignRepresentativeTotalTime(){
         String representative = "";
         int randomNumber = (int) (Math.random() * 10);
-        System.out.println(randomNumber);
         for(int i = 1; i < 11; i++){
             if(randomNumber == 1 || randomNumber == 2){
                 representative = "A";
