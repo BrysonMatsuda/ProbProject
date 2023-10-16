@@ -19,7 +19,7 @@ public class MonteCarlo{
         }
     }
 
-    public int randomVariableGenerator(){
-        return 0;
+    public double timeToGetToSwitchBoard(int val){
+        return (double) 9/(1024* val);
     }
 }
