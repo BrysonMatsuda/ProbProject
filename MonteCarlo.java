@@ -27,19 +27,23 @@ public class MonteCarlo{
                 if(isSuccessful()){
                     break;
                 }
+
                 numCalls++;
             }
             if(numCalls < 3) {
                 totalTime += numCalls * 3; //num * 3 is the time of first call given number of times through switchboard
-                totalTime += 2 * (numCalls - 1); //hangup time for failed calls
+                totalTime += 2 * (numCalls-1); //hangup time for failed calls
                 totalTime += 5; //+5 is for time after success to get into contact with representative
                 int representativeTime = assignRepresentativeTotalTime();
                 totalTime += representativeTime; //total time on phone with representative
                 DecimalFormat df = new DecimalFormat("#.###");
+                if(totalTime < 13){
+                    System.out.println("hello");
+                }
                 System.out.println("Total Time: " + df.format(totalTime));
             }else{
                 totalTime += 9; //3 first calls
-                totalTime += 4; //2 failed calls
+                totalTime += 6; //3 failed calls
                 DecimalFormat df = new DecimalFormat("#.###");
                 System.out.println("Total Time: " + df.format(totalTime));
             }
@@ -57,7 +61,7 @@ public class MonteCarlo{
 
     public int assignRepresentativeTotalTime(){
         String representative = "";
-        int randomNumber = (int) (Math.random() * 10);
+        int randomNumber = (int) (Math.random() * 10 + 1);
         if(randomNumber == 1 || randomNumber == 2){
             representative = "A";
         }
@@ -89,6 +93,7 @@ public class MonteCarlo{
         Random rand = new Random();
         int n = rand.nextInt(10000)+1;
         if(n<=2296){
+
             return true;
         }
         return false;
