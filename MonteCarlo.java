@@ -14,36 +14,38 @@ public class MonteCarlo{
         if(trials < 0){
             return 0;
         }else {
-            int num = 0;
-            double val = 0;
-            int x = 0;
-            while (num < 3) {
-                x = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
-                val = (double) x / MODULUS;
-                totalTime += x;
+            int numCalls = 0; //starts at 0;
+            double uValue = 0;
+            int xValue = 0;
+            while (numCalls < 3) {
+                xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
+                uValue = (double) xValue / MODULUS;
+                totalTime += xValue;
 
                 if(isSuccessful()){
                     break;
                 }
-                num++;
+                numCalls++;
             }
-            if(num != 3) {
-                var timeToSwitchBoard = timeToGetToSwitchBoard(val);
-                totalTime += timeToSwitchBoard;
+            if(numCalls != 3) {
+                var timeToSwitchBoard = timeToGetToSwitchBoard(uValue);
+                totalTime += timeToSwitchBoard + numCalls * 3; //num * 3 is the time of first call given number of times through switchboard
+                totalTime += 2 * (numCalls - 1); //hangup time for failed calls
+                totalTime += 5; //+5 is for time after success to get into contact with representative
                 int representativeTime = assignRepresentativeTotalTime();
-                totalTime += representativeTime;
+                totalTime += representativeTime; //total time on phone with representative
             }
 
 
             DecimalFormat df = new DecimalFormat("#.###");
-//          System.out.println(df.format(val));
+//          System.out.println(df.format(uValue));
             System.out.println(totalTime);
-            return randomNumberGenerator(x, trials - 1);
+            return randomNumberGenerator(xValue, trials - 1);
         }
     }
 
     public double timeToGetToSwitchBoard(double val){
-        return 3 + ((double) 9/(1024* val * val));
+        return ((double) 9/(1024* val * val));
     }
 
     public int assignRepresentativeTotalTime(){
