@@ -1,15 +1,20 @@
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class MonteCarlo{
     private final int MULTIPLIER = 24693;
     private final int INCREMENT = 3517;
     private final int MODULUS = 131072;
+    public ArrayList<Double> wValueList = new ArrayList<>();
     public MonteCarlo(){
 
     }
+
+    public ArrayList<Double> getWValueList() {
+        return wValueList;
+    }
+
     public long randomNumberGenerator(long seed, int trials){
         double totalTime = 0;
         if(trials < 0){
@@ -21,13 +26,13 @@ public class MonteCarlo{
             while (numCalls < 3) {
                 xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
                 uValue = (double) xValue / MODULUS;
+//              System.out.println(trials + ": " + uValue);
                 var timeToSwitchBoard = timeToGetToSwitchBoard(uValue);
                 totalTime += timeToSwitchBoard;
 
                 if(isSuccessful()){
                     break;
                 }
-
                 numCalls++;
             }
             if(numCalls < 3) {
@@ -37,15 +42,14 @@ public class MonteCarlo{
                 int representativeTime = assignRepresentativeTotalTime();
                 totalTime += representativeTime; //total time on phone with representative
                 DecimalFormat df = new DecimalFormat("#.###");
-                if(totalTime < 13){
-                    System.out.println("hello");
-                }
-                System.out.println("Total Time: " + df.format(totalTime));
+                System.out.println("Total Time: " + df.format(toMinutes(totalTime)));
+                wValueList.add(totalTime);
             }else{
                 totalTime += 9; //3 first calls
                 totalTime += 6; //3 failed calls
                 DecimalFormat df = new DecimalFormat("#.###");
-                System.out.println("Total Time: " + df.format(totalTime));
+                System.out.println("Total Time: " + df.format(toMinutes(totalTime)));
+                wValueList.add(totalTime);
             }
 
 
@@ -97,5 +101,14 @@ public class MonteCarlo{
             return true;
         }
         return false;
+    }
+
+    public double toMinutes(double seconds){
+        return seconds / 60;
+    }
+
+    public ArrayList<Double> toSortedArraylistOfWValues(ArrayList<Double> wValueList){
+        Collections.sort(wValueList);
+        return wValueList;
     }
 }
