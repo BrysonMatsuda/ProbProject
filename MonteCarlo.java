@@ -10,14 +10,22 @@ public class MonteCarlo{
 
     }
     public int randomNumberGenerator(int seed, int trials){
+        double totalTime = 0;
         if(trials < 0){
             return 0;
         }else {
             int x = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
             double val = (double) x / MODULUS;
+
             var timeToSwitchBoard = timeToGetToSwitchBoard(val);
+            totalTime += timeToSwitchBoard;
+            int representativeTime = assignRepresentativeTotalTime();
+            totalTime += representativeTime;
+
+
             DecimalFormat df = new DecimalFormat("#.###");
-//            System.out.println(df.format(val));
+//          System.out.println(df.format(val));
+            System.out.println(totalTime);
             return randomNumberGenerator(x, trials - 1);
         }
     }
@@ -26,24 +34,37 @@ public class MonteCarlo{
         return 3 + ((double) 9/(1024* val * val));
     }
 
-    public String assignRepresentative(){
+    public int assignRepresentativeTotalTime(){
         String representative = "";
         int randomNumber = (int) (Math.random() * 10);
         System.out.println(randomNumber);
         for(int i = 1; i < 11; i++){
             if(randomNumber == 1 || randomNumber == 2){
-                return "A";
+                representative = "A";
             }
             if(randomNumber == 3 || randomNumber == 4 || randomNumber == 5){
-                return "B";
+                representative = "B";
             }
             if(randomNumber == 6){
-                return "C";
+                representative = "C";
             }
             if(randomNumber == 7 || randomNumber == 8 || randomNumber == 9 || randomNumber == 10){
-                return "D";
+                representative = "D";
             }
         }
-        return representative;
+        if(representative.equals("A")){
+            return 72;
+        }
+        if(representative.equals("B")){
+            return 96;
+        }
+        if(representative.equals("C")){
+            return 81;
+        }
+        if(representative.equals("D")){
+            return 114;
+        }
+        return 0;
     }
+
 }
