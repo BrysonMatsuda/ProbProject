@@ -83,8 +83,11 @@ public class MonteCarlo{
     }
 
     public boolean isSuccessful(){
-
-
+        Random rand = new Random();
+        int n = rand.nextInt(10000)+1;
+        if(n<=2296){
+            return true;
+        }
         return false;
     }
 }
