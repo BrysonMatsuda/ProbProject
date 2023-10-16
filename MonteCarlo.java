@@ -14,9 +14,19 @@ public class MonteCarlo{
         if(trials < 0){
             return 0;
         }else {
-            int x = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
-            double val = (double) x / MODULUS;
+            int num = 0;
+            double val = 0;
+            int x = 0;
+            while (num < 3) {
+                x = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
+                val = (double) x / MODULUS;
+                totalTime += x;
 
+                if(isSuccessful()){
+                    break;
+                }
+                num++;
+            }
             var timeToSwitchBoard = timeToGetToSwitchBoard(val);
             totalTime += timeToSwitchBoard;
             int representativeTime = assignRepresentativeTotalTime();
@@ -67,4 +77,9 @@ public class MonteCarlo{
         return 0;
     }
 
+    public boolean isSuccessful(){
+
+
+        return false;
+    }
 }
