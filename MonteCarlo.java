@@ -20,6 +20,6 @@ public class MonteCarlo{
     }
 
     public double timeToGetToSwitchBoard(int val){
-        return (double) 9/(1024* val);
+        return (double) 9/(1024* val * val);
     }
 }
