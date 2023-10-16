@@ -1,9 +1,9 @@
 import java.text.DecimalFormat;
 
 public class MonteCarlo{
-    private final int multiplier = 24693;
-    private final int increment = 3517;
-    private final int modulus = 131072;
+    private final int MULTIPLIER = 24693;
+    private final int INCREMENT = 3517;
+    private final int MODULUS = 131072;
     public MonteCarlo(){
 
     }
@@ -11,8 +11,8 @@ public class MonteCarlo{
         if(trials < 0){
             return 0;
         }else {
-            int x = ((multiplier * seed + increment) % modulus);
-            double val = (double) x / modulus;
+            int x = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
+            double val = (double) x / MODULUS;
             DecimalFormat df = new DecimalFormat("#.###");
             System.out.println(df.format(val));
             return randomNumberGenerator(x, trials - 1);
