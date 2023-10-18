@@ -1,5 +1,7 @@
+import java.sql.Array;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MonteCarloTest {
     public static void main(String [] args){
@@ -16,5 +18,6 @@ public class MonteCarloTest {
         median = sortedArray.get(sortedArray.size() / 2) + sortedArray.get((sortedArray.size() + 1) / 2);
         System.out.println(sortedArray);
         System.out.println(mean + " " + median);
+
     }
 }

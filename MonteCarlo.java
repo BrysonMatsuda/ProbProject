@@ -27,10 +27,15 @@ public class MonteCarlo{
                 xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
                 uValue = (double) xValue / MODULUS;
 //              System.out.println(trials + ": " + uValue);
-                var timeToSwitchBoard = timeToGetToSwitchBoard(uValue);
-                totalTime += timeToSwitchBoard;
+                boolean isSuccessful = isSuccessful();
+                if (!isSuccessful) {
+                    var timeToSwitchBoard = 90.0;
+                    totalTime += timeToSwitchBoard;
+                }
 
-                if(isSuccessful()){
+                if(isSuccessful){
+                    var timeToSwitchBoard = timeToGetToSwitchBoard(uValue);
+                    totalTime += timeToSwitchBoard;
                     break;
                 }
                 numCalls++;
@@ -47,6 +52,7 @@ public class MonteCarlo{
             }else{
                 totalTime += 9; //3 first calls
                 totalTime += 6; //3 failed calls
+
                 DecimalFormat df = new DecimalFormat("#.###");
                 System.out.println("Total Time: " + df.format(toMinutes(totalTime)));
                 wValueList.add(totalTime);
