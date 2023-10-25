@@ -7,6 +7,7 @@ public class MonteCarlo{
     private final int INCREMENT = 3517;
     private final int MODULUS = 131072;
     public ArrayList<Double> wValueList = new ArrayList<>();
+    private double[] uValues = new double[3];
     public MonteCarlo(){
 
     }
@@ -14,7 +15,9 @@ public class MonteCarlo{
     public ArrayList<Double> getWValueList() {
         return wValueList;
     }
-
+    public double[] getUValues(){
+        return this.uValues;
+    }
     public long randomNumberGenerator(long seed, int trials){
         double totalTime = 0;
         if(trials < 0){
@@ -24,21 +27,28 @@ public class MonteCarlo{
             double uValue = 0;
             long xValue = 0;
             while (numCalls < 3) {
+                numCalls++;
                 xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
                 uValue = (double) xValue / MODULUS;
-//              System.out.println(trials + ": " + uValue);
+                if(trials == 449 || trials == 448 || trials == 447) {
+                    if(trials == 449){
+                        uValues[0] = uValue;
+                    }if(trials == 448){
+                        uValues[1] = uValue;
+                    }else{
+                        uValues[2] = uValue;
+                    }
+                }
                 boolean isSuccessful = isSuccessful();
                 if (!isSuccessful) {
                     var timeToSwitchBoard = 90.0;
                     totalTime += timeToSwitchBoard;
                 }
-
                 if(isSuccessful){
                     var timeToSwitchBoard = timeToGetToSwitchBoard(uValue);
                     totalTime += timeToSwitchBoard;
                     break;
                 }
-                numCalls++;
             }
             if(numCalls < 3) {
                 totalTime += numCalls * 3; //num * 3 is the time of first call given number of times through switchboard
@@ -47,14 +57,14 @@ public class MonteCarlo{
                 int representativeTime = assignRepresentativeTotalTime();
                 totalTime += representativeTime; //total time on phone with representative
                 DecimalFormat df = new DecimalFormat("#.###");
-                System.out.println("Total Time: " + df.format(toMinutes(totalTime)));
+                //System.out.println("Total Time: " + df.format(toMinutes(totalTime)));
                 wValueList.add(totalTime);
             }else{
                 totalTime += 9; //3 first calls
                 totalTime += 6; //3 failed calls
 
                 DecimalFormat df = new DecimalFormat("#.###");
-                System.out.println("Total Time: " + df.format(toMinutes(totalTime)));
+                //System.out.println("Total Time: " + df.format(toMinutes(totalTime)));
                 wValueList.add(totalTime);
             }
 

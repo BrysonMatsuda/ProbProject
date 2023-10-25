@@ -14,10 +14,15 @@ public class MonteCarloTest {
         for (Double aDouble : sortedArray) {
             sum += aDouble;
         }
+        System.out.println(Arrays.toString(monteCarlo.getUValues()));
         mean = sum / sortedArray.size();
-        median = sortedArray.get(sortedArray.size() / 2) + sortedArray.get((sortedArray.size() + 1) / 2);
-        System.out.println(sortedArray);
-        System.out.println(mean + " " + median);
+        median = (sortedArray.get(sortedArray.size() / 2) + sortedArray.get((sortedArray.size() + 1) / 2)) / 2;
+        int arr[] = {1};
+        sortedArray.stream().
+                sorted()
+                .forEach(x -> System.out.println("Trial " +  arr[0]++ +": " +  x));
+
+        System.out.println("Mean: " + mean + " " + "Median: " + median);
 
     }
 }
