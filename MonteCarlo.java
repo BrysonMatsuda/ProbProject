@@ -20,7 +20,7 @@ public class MonteCarlo{
     }
     public long randomNumberGenerator(long seed, int trials){
         double totalTime = 0;
-        if(trials < 0){
+        if(trials > 500){
             return 0;
         }else {
             int numCalls = 0; //starts at 0;
@@ -30,10 +30,10 @@ public class MonteCarlo{
                 numCalls++;
                 xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
                 uValue = (double) xValue / MODULUS;
-                if(trials == 449 || trials == 448 || trials == 447) {
-                    if(trials == 449){
+                if(trials == 51|| trials == 52 || trials == 53) {
+                    if(trials == 51){
                         uValues[0] = uValue;
-                    }if(trials == 448){
+                    }if(trials == 52){
                         uValues[1] = uValue;
                     }else{
                         uValues[2] = uValue;
@@ -71,7 +71,8 @@ public class MonteCarlo{
 
             DecimalFormat df = new DecimalFormat("#.###");
 //          System.out.println(df.format(uValue));
-            return randomNumberGenerator(xValue, trials - 1);
+            trials += 1;
+            return randomNumberGenerator(xValue, trials);
         }
     }
 
