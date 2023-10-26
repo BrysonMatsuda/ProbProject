@@ -23,12 +23,12 @@ public class MonteCarlo{
         if(trials > 500){
             return 0;
         }else {
-            int numCalls = 0; //starts at 0;
+            int callNumber = 0; //starts at 0;
             double uValue = 0;
             long xValue = 0;
             xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
             uValue = (double) xValue / MODULUS;
-            while (numCalls < 3) {
+            while (callNumber < 3) {
                 if(trials == 50|| trials == 51 || trials == 52) {
                     if(trials == 50){
                         uValues[0] = uValue;
@@ -44,14 +44,17 @@ public class MonteCarlo{
                 }
                 if(isSuccessful){
                     var timeToSwitchBoard = timeToGetToSwitchBoard(uValue * 60);
+                    if(timeToSwitchBoard > 90){
+                        timeToSwitchBoard = 90;
+                    }
                     totalTime += timeToSwitchBoard;
                     break;
                 }
-                numCalls++;
+                callNumber++;
             }
-            if(numCalls < 3) {
-                totalTime += (numCalls + 1) * 3; //num * 3 is the time of first call given number of times through switchboard
-                totalTime += 2 * (numCalls-1); //hangup time for failed calls
+            if(callNumber < 3) {
+                totalTime += (callNumber + 1) * 3; //num * 3 is the time of first call given number of times through switchboard
+                totalTime += 2 * (callNumber); //hangup time for failed calls
                 totalTime += 5; //+5 is for time after success to get into contact with representative
                 int representativeTime = assignRepresentativeTotalTime();
                 totalTime += representativeTime; //total time on phone with representative
@@ -77,8 +80,8 @@ public class MonteCarlo{
 
     public double timeToGetToSwitchBoard(double val){
         System.out.println(val);
-        System.out.println(Math.pow(val, .666));
-        return ((double) (1.0/8) * Math.pow(val, .66667));
+        System.out.println((8) * Math.pow(val, .666));
+        return ((double) 8 * Math.pow(val, .66667));
     }
 
     public int assignRepresentativeTotalTime(){
