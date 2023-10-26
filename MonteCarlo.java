@@ -29,7 +29,6 @@ public class MonteCarlo{
             xValue = ((MULTIPLIER * seed + INCREMENT) % MODULUS);
             uValue = (double) xValue / MODULUS;
             while (numCalls < 3) {
-                numCalls++;
                 if(trials == 50|| trials == 51 || trials == 52) {
                     if(trials == 50){
                         uValues[0] = uValue;
@@ -46,12 +45,12 @@ public class MonteCarlo{
                 if(isSuccessful){
                     var timeToSwitchBoard = timeToGetToSwitchBoard(uValue * 60);
                     totalTime += timeToSwitchBoard;
-                    System.out.println(totalTime);
                     break;
                 }
+                numCalls++;
             }
-            if(numCalls <= 3) {
-                totalTime += numCalls * 3; //num * 3 is the time of first call given number of times through switchboard
+            if(numCalls < 3) {
+                totalTime += (numCalls + 1) * 3; //num * 3 is the time of first call given number of times through switchboard
                 totalTime += 2 * (numCalls-1); //hangup time for failed calls
                 totalTime += 5; //+5 is for time after success to get into contact with representative
                 int representativeTime = assignRepresentativeTotalTime();
